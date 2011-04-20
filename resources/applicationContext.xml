@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:graniteds="http://www.graniteds.org/config"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+		http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd
+		http://www.graniteds.org/config 
+        http://www.graniteds.org/public/dtd/2.1.0/granite-config-2.1.xsd">
+
+	<tx:annotation-driven />
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+		
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="configLocation">
+			<value>classpath:/hibernate.cfg.xml</value>
+		</property>	
+	</bean>
+	
+	<graniteds:flex-filter url-pattern="/*" tide="true">
+    	<graniteds:tide-annotations>
+        	<graniteds:value>org.springframework.stereotype.Controller</graniteds:value>
+      	</graniteds:tide-annotations>
+  	</graniteds:flex-filter>
+		
+	<!--  Tide -->	
+	<!-- All this AOP stuff just to ensure the Tide persistence manager will be transactional 
+  	<aop:config>
+    	<aop:pointcut id="tidePersistenceManagerMethods" 
+        	expression="execution(* org.granite.tide.ITidePersistenceManager.*(..))"/>
+    	<aop:advisor advice-ref="tidePersistenceManagerMethodsTxAdvice" 
+        	pointcut-ref="tidePersistenceManagerMethods"/>
+  	</aop:config>
+
+  	<tx:advice id="tidePersistenceManagerMethodsTxAdvice" 
+    	transaction-manager="transactionManager">
+    	<tx:attributes>
+      		<tx:method name="*" propagation="REQUIRED" read-only="true"/>
+    	</tx:attributes>
+  	</tx:advice>
+
+  	<bean id="tidePersistenceManager"
+    	class="org.granite.tide.hibernate.HibernateSessionManager" scope="request">
+    	<constructor-arg>
+      		<ref bean="sessionFactory"/>
+    	</constructor-arg>
+  	</bean>
+	-->
+</beans> 

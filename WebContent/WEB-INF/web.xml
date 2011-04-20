@@ -10,8 +10,7 @@
 	<context-param>
 		<param-name>br.com.caelum.vraptor.packages</param-name>
 		<param-value>
-			br.com.caelum.vraptor.flex,
-			br.com.caelum.vraptor.util.hibernate
+			br.com.caelum.vraptor.flex
 		</param-value>
 	</context-param>
 

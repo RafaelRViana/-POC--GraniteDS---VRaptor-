@@ -26,13 +26,17 @@
       id="granite-service"
       class="flex.messaging.services.RemotingService"
       messageTypes="flex.messaging.messages.RemotingMessage">
-      <destination id="bookService">
+      <destination id="spring">
         <channels>
           <channel ref="my-graniteamf"/>
         </channels>
         <properties>
           <factory>vraptorFactory</factory>
-          <source>br.com.caelum.testeGranite.controller.BookController</source>
+          <entityManagerFactoryBeanName>
+                        entityManagerFactory
+                    </entityManagerFactoryBeanName>
+          
+         <!--  <persistence-manager-bean-name>tidePersistenceManager</persistence-manager-bean-name>  -->
         </properties>
       </destination>
     </service>
